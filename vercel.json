@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "create-react-app",
+  "buildCommand": "cd frontend && yarn install && CI=false yarn build",
+  "outputDirectory": "frontend/build",
+  "installCommand": "echo \"Install handled in build step\"",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

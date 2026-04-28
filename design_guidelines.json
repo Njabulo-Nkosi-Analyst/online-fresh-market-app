@@ -1,0 +1,149 @@
+{
+  "theme": "dark",
+  "archetype": "Organic & Earthy (Dark Variant)",
+  "brand_identity": {
+    "name": "Roots & Earth",
+    "description": "Premium fresh-food and grocery e-commerce platform targeting South African customers. Artisan farm-to-table feel with a dark earthy palette."
+  },
+  "typography": {
+    "headings": {
+      "font_family": "Cormorant Garamond, serif",
+      "import_url": "https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&display=swap",
+      "weights": ["400", "500", "600", "700"],
+      "classes": "font-serif tracking-tight",
+      "h1": "text-4xl sm:text-5xl lg:text-6xl",
+      "h2": "text-3xl sm:text-4xl",
+      "h3": "text-xl sm:text-2xl"
+    },
+    "body": {
+      "font_family": "Outfit, sans-serif",
+      "import_url": "https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap",
+      "weights": ["300", "400", "500", "600"],
+      "classes": "font-sans leading-relaxed",
+      "base": "text-base",
+      "small": "text-sm",
+      "tiny": "text-xs uppercase tracking-widest"
+    }
+  },
+  "colors": {
+    "background": {
+      "default": "#131412",
+      "card": "#1C1E1B",
+      "elevated": "#262924"
+    },
+    "primary": {
+      "DEFAULT": "#4A6741",
+      "hover": "#5C7F52",
+      "foreground": "#FFFFFF"
+    },
+    "accent": {
+      "DEFAULT": "#C36A4E",
+      "hover": "#D87A5D",
+      "foreground": "#FFFFFF",
+      "ochre": "#D69E4B"
+    },
+    "text": {
+      "primary": "#F2F0E6",
+      "secondary": "#A8A69C",
+      "muted": "#75746C"
+    },
+    "border": {
+      "DEFAULT": "#2D302A",
+      "focus": "#4A6741"
+    },
+    "status": {
+      "success": "#4A6741",
+      "warning": "#D69E4B",
+      "error": "#C36A4E",
+      "info": "#4A6741"
+    }
+  },
+  "spacing_and_layout": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "section_padding": "py-16 sm:py-24",
+    "grid_bento": "grid grid-cols-1 md:grid-cols-12 gap-6",
+    "product_grid": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8",
+    "card_padding": "p-6",
+    "border_radius": {
+      "small": "rounded-sm",
+      "default": "rounded-md",
+      "large": "rounded-xl",
+      "full": "rounded-full"
+    }
+  },
+  "components": {
+    "hero_carousel": {
+      "layout": "Full width or large bento grid spanning 12 cols, height around 70vh",
+      "overlay": "bg-gradient-to-r from-black/80 via-black/40 to-transparent",
+      "animation": "Smooth fade or slide for the banners using Framer Motion"
+    },
+    "product_card": {
+      "surface": "Solid #1C1E1B with 1px border #2D302A, no drop shadow. Focus on high-quality image",
+      "hover_effect": "Slight lift -translate-y-1, border changes to primary or accent color",
+      "image": "Aspect square or 4:5, object-cover, rounded-t-md",
+      "badges": "Absolute top-2 left-2 for discount/stock, using Accent (Terracotta) for urgent/sale",
+      "wishlist_icon": "Absolute top-2 right-2, iconoir-react or lucide-react"
+    },
+    "sidebar_navigation": {
+      "surface": "bg-[#131412] or transparent if on layout",
+      "hover": "bg-[#1C1E1B] text-[#F2F0E6]",
+      "icons": "lucide-react or phosphor-icons"
+    },
+    "checkout_cart": {
+      "drawer": "bg-[#1C1E1B] border-l border-[#2D302A]",
+      "glassmorphism_nav": "backdrop-blur-xl bg-[#131412]/80 border-b border-[#2D302A]"
+    }
+  },
+  "images": {
+    "hero_banners": [
+      {
+        "url": "https://images.unsplash.com/photo-1776773873159-20f3f190f6bb?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMzN8MHwxfHNlYXJjaHwxfHxvcmdhbmljJTIwZnJlc2glMjB2ZWdldGFibGVzJTIwZGFyayUyMGJhY2tncm91bmR8ZW58MHx8fHwxNzc3Mjk5NzYxfDA&ixlib=rb-4.1.0&q=85",
+        "category": "Today's Deals",
+        "description": "Butternut squash, onion, and zucchini on a wooden surface."
+      },
+      {
+        "url": "https://images.pexels.com/photos/9207676/pexels-photo-9207676.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "Organic Picks",
+        "description": "A colorful collection of heirloom tomatoes on a dark background."
+      },
+      {
+        "url": "https://images.pexels.com/photos/3889960/pexels-photo-3889960.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "category": "Free Delivery Over R500",
+        "description": "Hands slicing a fresh carrot on a wooden table outdoors."
+      }
+    ],
+    "categories": [
+      {
+        "name": "Vegetables",
+        "url": "https://images.pexels.com/photos/5502852/pexels-photo-5502852.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "name": "Organic Eggs",
+        "url": "https://images.pexels.com/photos/35377948/pexels-photo-35377948.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "name": "Dairy",
+        "url": "https://images.pexels.com/photos/9424540/pexels-photo-9424540.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "name": "Healthy Snacks",
+        "url": "https://images.pexels.com/photos/4499243/pexels-photo-4499243.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      },
+      {
+        "name": "Juices & Smoothies",
+        "url": "https://images.pexels.com/photos/32695688/pexels-photo-32695688.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
+      }
+    ]
+  },
+  "instructions_to_main_agent": [
+    "Use Lucide-React or Phosphor Icons for category icons.",
+    "Ensure the hero slider uses actual text layered over the image using the provided bg-gradient-to-r overlay to ensure readability.",
+    "Implement the UI exclusively using Tailwind CSS and raw HTML tags or highly customized Shadcn components.",
+    "The currency is ZAR (R), so format prices as 'R 50.00'.",
+    "Do not use generic Inter font. Apply the Cormorant Garamond for headings and Outfit for body.",
+    "Add 'data-testid' attributes to all interactive elements for testing.",
+    "Build out the responsive slide-in cart and checkout flow with location-based suggestions.",
+    "Implement an admin dashboard section with analytics and product management.",
+    "Use high contrast ratios for text visibility against the dark backgrounds."
+  ]
+}

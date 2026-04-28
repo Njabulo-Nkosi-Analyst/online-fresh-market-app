@@ -1,0 +1,148 @@
+/* Roots & Earth — dark earthy organic theme */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #131412;
+  --bg-card: #1c1e1b;
+  --bg-elev: #262924;
+  --primary: #4a6741;
+  --primary-hover: #5c7f52;
+  --accent: #c36a4e;
+  --accent-hover: #d87a5d;
+  --ochre: #d69e4b;
+  --text: #f2f0e6;
+  --text-muted: #a8a69c;
+  --text-dim: #75746c;
+  --border: #2d302a;
+
+  --background: 80 6% 8%;
+  --foreground: 48 29% 93%;
+  --card: 90 5% 11%;
+  --card-foreground: 48 29% 93%;
+  --popover: 90 5% 11%;
+  --popover-foreground: 48 29% 93%;
+  --primary-h: 103 22% 33%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 90 6% 15%;
+  --secondary-foreground: 48 29% 93%;
+  --muted: 90 6% 15%;
+  --muted-foreground: 48 4% 63%;
+  --accent-h: 17 52% 54%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 17 52% 54%;
+  --destructive-foreground: 0 0% 100%;
+  --border-h: 80 6% 18%;
+  --input: 80 6% 18%;
+  --ring: 103 22% 33%;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: var(--border);
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  background-image:
+    radial-gradient(1200px 600px at 85% -10%, rgba(195, 106, 78, 0.08), transparent 60%),
+    radial-gradient(900px 500px at -10% 20%, rgba(74, 103, 65, 0.10), transparent 60%);
+  background-attachment: fixed;
+}
+
+.font-serif {
+  font-family: 'Cormorant Garamond', serif;
+  letter-spacing: -0.01em;
+}
+
+.grain::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3CfeColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.88 0 0 0 0 0.8 0 0 0 0.25 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.3;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--bg-elev); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--border); }
+
+/* Selection */
+::selection { background: var(--primary); color: #fff; }
+
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  transition: background 200ms ease, transform 200ms ease;
+}
+.btn-primary:hover { background: var(--primary-hover); }
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+  transition: background 200ms ease;
+}
+.btn-accent:hover { background: var(--accent-hover); }
+
+.ring-focus { box-shadow: 0 0 0 2px rgba(74, 103, 65, 0.4); }
+
+.card-surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(242, 240, 230, 0.06),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up { animation: fadeUp 500ms ease both; }
+
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -4px;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 300ms ease;
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}

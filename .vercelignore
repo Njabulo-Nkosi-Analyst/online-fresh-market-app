@@ -1,0 +1,9 @@
+backend/
+tests/
+test_reports/
+memory/
+*.md
+!frontend/README.md
+.git/
+.emergent/
+node_modules/
