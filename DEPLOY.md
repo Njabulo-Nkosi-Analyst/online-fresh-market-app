@@ -16,34 +16,26 @@ The app talks **directly to Supabase from the browser**, protected by Row-Level 
 ### 1. Push code to GitHub
 In Emergent's chat input bar, click **"Save to GitHub"** → choose a repo name → push.
 
-### 2. Apply the guest-checkout policy in Supabase (one tiny SQL paste)
+### 2. Set up the Supabase database (one SQL paste)
 
-This is the *only* SQL you'll ever paste. It allows anonymous shoppers to create orders without signing in.
+⚠️ This step **wipes** any existing Roots & Earth tables and starts fresh — perfect for a clean start.
 
-Open the SQL editor in your Supabase dashboard → **New query**, paste and click **Run**:
+1. Open Supabase → your project → **SQL Editor** → **New query**
+2. Open `/app/SUPABASE_RESET.sql` (in this workspace), copy the entire contents, paste, and click **Run**
+3. You should see "Success. No rows returned"
 
-```sql
-drop policy if exists "orders insert own" on public.orders;
-create policy "orders insert own or guest" on public.orders for insert
-  with check (user_id is null or auth.uid() = user_id);
-
-drop policy if exists "order_items insert via order" on public.order_items;
-create policy "order_items insert via order" on public.order_items for insert
-  with check (
-    exists (
-      select 1 from public.orders o
-      where o.id = order_id
-        and (o.user_id is null or o.user_id = auth.uid())
-    )
-  );
-```
+This single script creates:
+- All 6 tables (`profiles`, `categories`, `products`, `orders`, `order_items`, `favorites`)
+- Row-Level Security policies (incl. guest checkout)
+- Auto-create-profile trigger on signup
+- 6 categories + 16 seeded products
 
 ### 3. Deploy on Vercel
 1. Go to **https://vercel.com** → log in with GitHub → "Add New Project"
 2. Import the GitHub repo you just pushed
 3. **Framework Preset**: leave as auto-detected (Vercel will read `vercel.json` at the repo root)
 4. **Root Directory**: leave as `./` — the root `vercel.json` builds the frontend folder for you
-5. **Build & Output Settings**: leave as auto (the root `vercel.json` already specifies `cd frontend && yarn install && CI=false yarn build` and `frontend/build` as the output)
+5. **Build & Output Settings**: leave as auto (the root `vercel.json` already specifies `cd frontend && yarn install && yarn build` and `frontend/build` as the output)
 6. **Environment Variables** — add these two:
    - `REACT_APP_SUPABASE_URL` = your Supabase project URL (e.g. `https://abcd.supabase.co`)
    - `REACT_APP_SUPABASE_ANON_KEY` = your Supabase **public anon** key
@@ -120,7 +112,7 @@ For a small business doing < 10K monthly visitors, you'll never pay a cent.
 | Symptom | Cause | Fix |
 | --- | --- | --- |
 | `yarn install --frozen-lockfile` error | Old config | Already fixed — current `vercel.json` uses plain `yarn install` |
-| Build fails with `Treating warnings as errors` | CRA's CI=true behaviour | Already fixed — build runs with `CI=false` |
+| Build fails with `Treating warnings as errors` | CRA's CI=true behaviour | Already fixed — zero ESLint warnings remain in the codebase, so strict CI passes cleanly |
 | Blank white page after deploy | Missing env vars | Add `REACT_APP_SUPABASE_URL` and `REACT_APP_SUPABASE_ANON_KEY` in Vercel → Settings → Environment Variables, then redeploy |
 | `supabase is not defined` runtime error | Old code | Already fixed in `CheckoutPage.jsx` |
 | Routes 404 on refresh | Missing rewrites | Already configured in `vercel.json` |

@@ -30,6 +30,7 @@ const FavoritesPage = () => {
     if (authLoading) return;
     if (!user) { setAuthOpen(true); nav('/'); return; }
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading]);
 
   const toggle = async (p) => {

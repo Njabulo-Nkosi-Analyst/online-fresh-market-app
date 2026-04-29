@@ -30,6 +30,7 @@ const AdminPage = () => {
     if (!user || !profile) return;
     if (!profile.is_admin) { toast.error('Admin access required'); nav('/'); return; }
     load();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, profile, authLoading]);
 
   const load = async () => {

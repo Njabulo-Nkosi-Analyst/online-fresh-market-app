@@ -33,6 +33,7 @@ const OrdersPage = () => {
       setOrders(data || []);
       setLoading(false);
     })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, authLoading]);
 
   if (!user) return null;
