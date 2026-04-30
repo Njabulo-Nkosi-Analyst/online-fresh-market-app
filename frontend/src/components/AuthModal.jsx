@@ -25,21 +25,35 @@ const AuthModal = () => {
           ? await signIn(email, password)
           : await signUp(email, password, name);
       if (error) {
-        const msg = error.message || String(error);
-        if (msg.toLowerCase().includes('email') && msg.toLowerCase().includes('invalid')) {
+        const raw = error.message || String(error);
+        const msg = raw.toLowerCase();
+
+        // ---- Sign-in specific ----
+        if (mode === 'signin' && msg.includes('email not confirmed')) {
+          toast.error(
+            'Your email is not confirmed yet. Check your inbox for the Supabase verification link — or turn off "Confirm email" in Supabase → Authentication → Providers → Email for instant access.',
+            { duration: 9000 },
+          );
+        } else if (mode === 'signin' && (msg.includes('invalid login') || msg.includes('invalid credentials'))) {
+          toast.error('Wrong email or password. Try again, or sign up if you don\'t have an account yet.');
+        }
+        // ---- Sign-up specific ----
+        else if (mode === 'signup' && (msg.includes('already registered') || msg.includes('already exists') || msg.includes('user already'))) {
+          toast.error('An account with this email already exists. Try signing in instead.');
+        } else if (msg.includes('email') && msg.includes('invalid')) {
           toast.error('Use a real email domain (e.g. gmail.com)');
-        } else if (msg.toLowerCase().includes('rate limit')) {
-          toast.error('Too many attempts. In Supabase → Authentication → Providers → Email, turn off "Confirm email" for testing, then retry.');
-        } else if (msg.toLowerCase().includes('already')) {
-          toast.error('An account with this email already exists. Try signing in.');
+        } else if (msg.includes('rate limit')) {
+          toast.error('Too many attempts — wait a minute and try again.');
+        } else if (msg.includes('password') && msg.includes('6')) {
+          toast.error('Password must be at least 6 characters.');
         } else {
-          toast.error(msg);
+          toast.error(raw);
         }
       } else {
         toast.success(
           mode === 'signin'
             ? 'Welcome back'
-            : 'Account created! If email confirmation is enabled in Supabase, check your inbox.',
+            : 'Account created! If email confirmation is enabled in Supabase, check your inbox before signing in.',
         );
         setAuthOpen(false);
       }
@@ -54,8 +68,12 @@ const AuthModal = () => {
     try {
       const { error } = await signInWithGoogle();
       if (error) {
-        if ((error.message || '').toLowerCase().includes('not enabled')) {
-          toast.error('Google sign-in is not enabled in your Supabase project. Enable it in Supabase → Authentication → Providers → Google.');
+        const msg = (error.message || '').toLowerCase();
+        if (msg.includes('not enabled') || msg.includes('unsupported provider') || msg.includes('validation_failed')) {
+          toast.error(
+            'Google sign-in is off. Turn it on in Supabase → Authentication → Providers → Google, or just use email + password below.',
+            { duration: 8000 },
+          );
         } else {
           toast.error(error.message);
         }
