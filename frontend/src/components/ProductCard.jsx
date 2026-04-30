@@ -2,6 +2,7 @@ import React from 'react';
 import { Heart, Star, Plus } from 'lucide-react';
 import { formatR } from '@/lib/supabase';
 import { useCart } from '@/context/CartContext';
+import { trackEvent } from '@/lib/analytics';
 import { toast } from 'sonner';
 
 const ProductCard = ({ product, onToggleFavorite, isFav }) => {
@@ -16,6 +17,11 @@ const ProductCard = ({ product, onToggleFavorite, isFav }) => {
   const onAdd = () => {
     if (out) return toast.error('Out of stock');
     add(product);
+    trackEvent('add_to_cart', {
+      product_id: product.id,
+      product_name: product.name,
+      price: Number(product.price),
+    });
     toast.success(`${product.name} added to cart`);
   };
 

@@ -5,6 +5,7 @@ import { useAuth } from '@/context/AuthContext';
 import { LineChart, Line, ResponsiveContainer, XAxis, YAxis, Tooltip, BarChart, Bar, CartesianGrid } from 'recharts';
 import { DollarSign, ShoppingBag, TrendingUp, Package2, Plus, Pencil, Trash2, X, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
+import AnalyticsSection from '@/components/AnalyticsSection';
 
 const StatCard = ({ icon: Icon, label, value, hint, accent = '#4a6741' }) => (
   <div className="card-surface rounded-xl p-5">
@@ -218,6 +219,8 @@ const AdminPage = () => {
               {orders.length === 0 && <div className="p-6 text-[#75746c]">No orders yet.</div>}
             </div>
           </div>
+
+          <AnalyticsSection />
         </>
       )}
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, Leaf } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import { useUI } from '@/context/UIContext';
+import { trackEvent } from '@/lib/analytics';
 import { toast } from 'sonner';
 
 const AuthModal = () => {
@@ -50,6 +51,7 @@ const AuthModal = () => {
           toast.error(raw);
         }
       } else {
+        trackEvent(mode === 'signin' ? 'sign_in' : 'sign_up', { email });
         toast.success(
           mode === 'signin'
             ? 'Welcome back'

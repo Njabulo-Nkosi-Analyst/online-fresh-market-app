@@ -4,6 +4,7 @@ import { useCart } from '@/context/CartContext';
 import { useAuth } from '@/context/AuthContext';
 import { useUI } from '@/context/UIContext';
 import { supabase, formatR } from '@/lib/supabase';
+import { trackEvent } from '@/lib/analytics';
 import { Truck, Store, Clock, MapPin, CheckCircle2, ArrowLeft, UserPlus } from 'lucide-react';
 import { toast } from 'sonner';
 
@@ -63,6 +64,13 @@ const CheckoutPage = () => {
       }));
       const { error: itemErr } = await supabase.from('order_items').insert(itemRows);
       if (itemErr) throw new Error(itemErr.message);
+
+      trackEvent('order_placed', {
+        order_id: order.id,
+        total: Number(total),
+        item_count: items.length,
+        delivery_type: deliveryType,
+      });
 
       setPlacedOrder(order);
       clear();

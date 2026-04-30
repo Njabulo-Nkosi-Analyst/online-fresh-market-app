@@ -9,6 +9,7 @@ import { UIProvider } from '@/context/UIContext';
 import Navbar from '@/components/Navbar';
 import CartDrawer from '@/components/CartDrawer';
 import AuthModal from '@/components/AuthModal';
+import AnalyticsTracker from '@/components/AnalyticsTracker';
 import HomePage from '@/pages/HomePage';
 import CheckoutPage from '@/pages/CheckoutPage';
 import OrdersPage from '@/pages/OrdersPage';
@@ -23,6 +24,7 @@ function App() {
         <UIProvider>
         <div className="App">
           <BrowserRouter>
+            <AnalyticsTracker />
             <Navbar />
             <Routes>
               <Route path="/" element={<HomePage />} />
