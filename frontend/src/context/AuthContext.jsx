@@ -67,15 +67,26 @@ export const AuthProvider = ({ children }) => {
       return { error: { message: err?.message || 'Google sign-in failed' } };
     }
   };
-
+  const resendConfirmation = async (email) => {
+    try {
+      const { error } = await supabase.auth.resend({
+        type: 'signup',
+        email,
+        options: { emailRedirectTo: window.location.origin },
+      });
+      return { error };
+    } catch (err) {
+      return { error: { message: err?.message || 'Could not resend email' } };
+    }
+  };
   const signOut = async () => {
     await supabase.auth.signOut();
   };
 
   return (
     <AuthCtx.Provider
-      value={{ user, profile, loading, signUp, signIn, signInWithGoogle, signOut }}
-    >
+      value={{ user, profile, loading, signUp, signIn, signInWithGoogle, signOut, resendConfirmation }}
+      >
       {children}
     </AuthCtx.Provider>
   );
