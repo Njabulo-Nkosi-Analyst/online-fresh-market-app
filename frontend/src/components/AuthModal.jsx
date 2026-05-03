@@ -4,6 +4,7 @@ import { useAuth } from '@/context/AuthContext';
 import { useUI } from '@/context/UIContext';
 import { trackEvent } from '@/lib/analytics';
 import { toast } from 'sonner';
+import { supabase } from '@/lib/supabase';
 
 const AuthModal = () => {
   const { authOpen, setAuthOpen } = useUI();
@@ -21,6 +22,25 @@ const AuthModal = () => {
     setAuthOpen(false);
     setView('form');
     setPassword('');
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) return toast.error('Enter your email above first.');
+    setBusy(true);
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      });
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success(`Password reset email sent to ${email}. Check your inbox!`, { duration: 7000 });
+      }
+    } catch (err) {
+      toast.error('Could not send reset email. Try again.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   const submit = async (e) => {
@@ -123,7 +143,7 @@ const AuthModal = () => {
           <div className="card-surface rounded-lg p-4 mt-6 text-left text-xs text-[#a8a69c] space-y-1">
             <div>📩 The email arrives within a minute or two</div>
             <div>🗂️ Check your spam / promotions folder too</div>
-            <div>✉️ Subject line: "Confirm your email"</div>
+            <div>✉️ Subject line: "Confirm your Roots & Earth account"</div>
           </div>
           <button
             onClick={resend}
@@ -212,14 +232,17 @@ const AuthModal = () => {
             {busy ? 'Please wait…' : mode === 'signin' ? 'Sign in' : 'Create account'}
           </button>
         </form>
+
         {mode === 'signin' && (
           <button
-            onClick={() => email ? setView('check-email') : toast.error('Enter your email above first.')}
-            className="w-full mt-3 text-xs text-[#a8a69c] hover:text-[#d69e4b]"
+            onClick={handleForgotPassword}
+            disabled={busy}
+            className="w-full mt-3 text-xs text-[#a8a69c] hover:text-[#d69e4b] disabled:opacity-60"
           >
-            Did not get the confirmation email? Resend
+            Forgot password? Reset it
           </button>
         )}
+
         <p className="text-center text-sm text-[#a8a69c] mt-5">
           {mode === 'signin' ? "Don't have an account?" : 'Already a member?'}{' '}
           <button
