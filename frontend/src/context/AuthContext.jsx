@@ -60,25 +60,33 @@ export const AuthProvider = ({ children }) => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
-       options: { redirectTo: `${window.location.origin}/auth/callback` },
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
+        },
       });
       return { error };
     } catch (err) {
       return { error: { message: err?.message || 'Google sign-in failed' } };
     }
   };
+
   const resendConfirmation = async (email) => {
     try {
       const { error } = await supabase.auth.resend({
         type: 'signup',
         email,
-        options: { emailRedirectTo: window.location.origin },
+        options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
       });
       return { error };
     } catch (err) {
       return { error: { message: err?.message || 'Could not resend email' } };
     }
   };
+
   const signOut = async () => {
     await supabase.auth.signOut();
   };
@@ -86,11 +94,10 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthCtx.Provider
       value={{ user, profile, loading, signUp, signIn, signInWithGoogle, signOut, resendConfirmation }}
-      >
+    >
       {children}
     </AuthCtx.Provider>
   );
 };
 
 export const useAuth = () => useContext(AuthCtx);
-
