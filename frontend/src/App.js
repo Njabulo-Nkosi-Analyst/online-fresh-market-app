@@ -5,7 +5,7 @@ import '@/App.css';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
 import { UIProvider } from '@/context/UIContext';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/Navbar'; 
 import CartDrawer from '@/components/CartDrawer';
 import AuthModal from '@/components/AuthModal';
 import AnalyticsTracker from '@/components/AnalyticsTracker';
