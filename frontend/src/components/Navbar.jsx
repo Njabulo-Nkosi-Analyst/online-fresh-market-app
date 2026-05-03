@@ -71,19 +71,26 @@ const Navbar = () => {
 
           {user ? (
             <div className="flex items-center gap-2 pl-2 border-l border-[#2d302a]">
-              <div className="text-right hidden sm:block">
-                <div className="text-xs text-[#75746c] uppercase tracking-wider">Hello</div>
-                <div className="text-sm text-[#f2f0e6] leading-none">
-                  {profile?.full_name || user.email?.split('@')[0]}
-                </div>
-              </div>
               <button
-                data-testid="nav-orders-btn"
+                data-testid="nav-user-pill"
                 onClick={() => nav('/orders')}
                 title="My orders"
-                className="p-2 rounded-full hover:bg-[#1c1e1b] text-[#a8a69c] hover:text-[#f2f0e6] transition"
+                className="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full bg-[#1c1e1b] hover:bg-[#262924] border border-[#2d302a] hover:border-[#4a6741] transition group"
               >
-                <User className="w-5 h-5" />
+                <span
+                  className="w-7 h-7 rounded-full bg-gradient-to-br from-[#4a6741] to-[#d69e4b] flex items-center justify-center text-[#131412] font-serif text-sm font-semibold flex-shrink-0"
+                >
+                  {(profile?.full_name || user.email || '?').trim().charAt(0).toUpperCase()}
+                </span>
+                <span className="hidden sm:flex flex-col text-left leading-none">
+                  <span className="text-[10px] text-[#75746c] uppercase tracking-wider">Hello</span>
+                  <span
+                    data-testid="nav-user-name"
+                    className="text-sm text-[#f2f0e6] mt-0.5 max-w-[140px] truncate"
+                  >
+                    {profile?.full_name || user.email?.split('@')[0]}
+                  </span>
+                </span>
               </button>
               {profile?.is_admin && (
                 <button

@@ -36,15 +36,21 @@ const AuthModal = () => {
             { duration: 9000 },
           );
         } else if (mode === 'signin' && (msg.includes('invalid login') || msg.includes('invalid credentials'))) {
-          toast.error('Wrong email or password. Try again, or sign up if you don\'t have an account yet.');
+          toast.error(
+            'Wrong email/password — OR your email is not confirmed yet. Check your inbox for the Supabase verification link, or disable "Confirm email" in Supabase → Authentication → Providers → Email.',
+            { duration: 10000 },
+          );
         }
         // ---- Sign-up specific ----
         else if (mode === 'signup' && (msg.includes('already registered') || msg.includes('already exists') || msg.includes('user already'))) {
           toast.error('An account with this email already exists. Try signing in instead.');
         } else if (msg.includes('email') && msg.includes('invalid')) {
           toast.error('Use a real email domain (e.g. gmail.com)');
-        } else if (msg.includes('rate limit')) {
-          toast.error('Too many attempts — wait a minute and try again.');
+        } else if (msg.includes('rate limit') || msg.includes('too many') || msg.includes('429')) {
+          toast.error(
+            'Supabase email rate-limit hit (4 confirmation emails per hour). Easiest fix: Supabase → Authentication → Providers → Email → turn off "Confirm email" → Save. Then sign-up works instantly.',
+            { duration: 12000 },
+          );
         } else if (msg.includes('password') && msg.includes('6')) {
           toast.error('Password must be at least 6 characters.');
         } else {
@@ -52,11 +58,14 @@ const AuthModal = () => {
         }
       } else {
         trackEvent(mode === 'signin' ? 'sign_in' : 'sign_up', { email });
-        toast.success(
-          mode === 'signin'
-            ? 'Welcome back'
-            : 'Account created! If email confirmation is enabled in Supabase, check your inbox before signing in.',
-        );
+        if (mode === 'signin') {
+          toast.success(`Welcome back, ${name || email.split('@')[0]} 🌱`);
+        } else {
+          toast.success(
+            'Account created! Check your inbox and click the confirmation link before signing in. (Or turn off "Confirm email" in Supabase → Authentication → Providers → Email for instant sign-in.)',
+            { duration: 12000 },
+          );
+        }
         setAuthOpen(false);
       }
     } catch (err) {
